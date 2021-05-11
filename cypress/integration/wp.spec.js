@@ -7,6 +7,7 @@ const profile = new Profile();
     beforeEach(function () {
         cy.fixture( 'example.json' ).as( 'textData' )
         cy.visit( '/' )
+        cy.get('button[class="button gdpr-banner__acknowledge-button"]').click()
         cy.get( '#usernameOrEmail' )
             .clear()
             .type( "versallly" );
@@ -59,6 +60,7 @@ const profile = new Profile();
 
     it('Change About me section', function(){
         cy.wait(1000)
+        profile.aboutMe().clear()
         profile.aboutMe().type( this.textData.aboutText );
         profile.saveProfileDetails().click();
         profile.successMessage().should( 'be.visible' );
